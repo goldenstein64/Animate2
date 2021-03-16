@@ -1,6 +1,6 @@
 local function linkTables(oldTable, links)
 	links[oldTable] = {}
-	for k, v in pairs(oldTable) do
+	for _, v in pairs(oldTable) do
 		if type(v) == "table" and not links[v] then
 			linkTables(v, links)
 		end

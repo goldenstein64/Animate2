@@ -1,0 +1,14 @@
+{
+  "name": "Animate2",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+
+      "Animate2": {
+        "$path": "src"
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+{
+    "editor.tabSize": 2,
+    "rojo.buildOutputPath": "$env:USERPROFILE/Downloads",
+    "rojo.pluginManagement": true
+}

@@ -6,9 +6,9 @@ end
 
 local function AttachTool(self, character)
 	coroutine.wrap(function()
-		
+
 		self:WaitForAttached("Machines")
-		
+
 		if self.Connections.ToolAdded then
 			self.Connections.ToolAdded()
 		end
@@ -17,7 +17,7 @@ local function AttachTool(self, character)
 				self.Machines.Tool:ChangeState("None", child)
 			end
 		end))
-		
+
 		if self.Connections.ToolRemoved then
 			self.Connections.ToolRemoved()
 		end

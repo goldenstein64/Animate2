@@ -3,23 +3,27 @@ local Players = game:GetService("Players")
 local localPlayer = Players.LocalPlayer
 
 local GetAnimsLib = {
-	Name = "GetAnimsLib"
+	Name = "GetAnimsLib",
 }
 
 function GetAnimsLib:GetAvatarAnimations(player)
-	assert(typeof(player) == "Instance" and player:IsA("Player") or typeof(player) == "nil", 
-		"Only a Player can be provided to this method!")
+	assert(
+		typeof(player) == "Instance" and player:IsA("Player") or typeof(player) == "nil",
+		"Only a Player can be provided to this method!"
+	)
 
 	player = player or localPlayer
 	local parent = Instance.new("Folder")
-	
+
 	if self.Humanoid.RigType == Enum.HumanoidRigType.R15 then
 		local s, model
-		for i = 1, 3 do
+		for _ = 1, 3 do
 			s, model = pcall(Players.GetCharacterAppearanceAsync, Players, player.UserId)
-			if s then break end
+			if s then
+				break
+			end
 		end
-		
+
 		if s and model then
 			for _, child in ipairs(model:GetChildren()) do
 				if child.Name == "R15Anim" then
@@ -41,7 +45,7 @@ function GetAnimsLib:GetAvatarAnimations(player)
 		warn("GetAvatarAnimations should only be called for humanoids of rig type 'R15'!")
 		return nil
 	end
-	
+
 	return parent
 end
 

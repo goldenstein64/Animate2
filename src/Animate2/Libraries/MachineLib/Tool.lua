@@ -1,7 +1,7 @@
 local RunService = game:GetService("RunService")
 
 local Tool = {
-	AnimScope = {"toolnone", "toolslash", "toollunge"}
+	AnimScope = { "toolnone", "toolslash", "toollunge" },
 }
 
 local function revertNone(self)
@@ -12,7 +12,7 @@ local function revertNone(self)
 		while i < 0.3 do
 			i = i + RunService.RenderStepped:Wait()
 		end
-		
+
 		if newId == self.Id then
 			self:ChangeState("None")
 		end
@@ -35,14 +35,14 @@ States.None = {
 			end)
 		end
 		self.Thread:Play("toolnone", 0.1, true)
-	end
+	end,
 }
 
 States.Slash = {
 	onBind = function(self)
 		self.Thread:Play("toolslash", 0)
 		revertNone(self)
-	end
+	end,
 }
 
 States.Lunge = {
@@ -52,7 +52,7 @@ States.Lunge = {
 			self.Thread:Play("toollunge", 0.1)
 			revertNone(self)
 		end
-	end
+	end,
 }
 
 States.Null = {
@@ -64,7 +64,7 @@ States.Null = {
 		self.CurrentTool = nil
 		self.Id = nil
 		self.Thread:Stop()
-	end
+	end,
 }
 
 return Tool

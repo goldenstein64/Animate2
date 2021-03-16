@@ -11,29 +11,29 @@ TrackThread.__index = TrackThread
 local function roll(trackList)
 	if #trackList.Tracks > 1 then
 		local pick = R:NextInteger(1, trackList.TotalWeight)
-		
+
 		local index = 1
 		while pick > trackList.Tracks[index].Weight do
 			pick -= trackList.Tracks[index].Weight
 			index += 1
 		end
-		
+
 		return trackList.Tracks[index].Track
 	else
 		return trackList.Tracks[1].Track
 	end
-	
+
 end
 
 function TrackThread.new(machine, trackLists)
 	local self = {
 		Machine = machine,
 		TrackLists = trackLists,
-		
+
 		Current = nil,
 		LoopHandler = nil,
 	}
-	
+
 	return setmetatable(self, TrackThread)
 end
 
@@ -41,7 +41,7 @@ function TrackThread:ConnectLooped()
 	if self.LoopHandler then
 		self.LoopHandler:Disconnect()
 	end
-	
+
 	local track = self.Current
 	local trackList = self.TrackLists[track.Name]
 	if track and trackList then
@@ -69,7 +69,7 @@ function TrackThread:OnStoppedState(stateName)
 	if self.LoopHandler then
 		self.LoopHandler:Disconnect()
 	end
-	
+
 	self.LoopHandler = self.Current.Stopped:Connect(function()
 		self.Machine:ChangeState(stateName)
 	end)
@@ -83,10 +83,10 @@ end
 
 function TrackThread:PlayTrack(track, fadeTime, connectLooped)
 	self:Stop(fadeTime)
-	
+
 	self.Current = track
 	track:Play(fadeTime)
-	
+
 	local trackList = self.TrackLists[track.Name]
 	if connectLooped and trackList then
 		self:ConnectLooped()
@@ -98,7 +98,7 @@ function TrackThread:Stop(fadeTime)
 		self.LoopHandler:Disconnect()
 		self.LoopHandler = nil
 	end
-	
+
 	if self.Current then
 		if self.Current.IsPlaying then
 			self.Current:Stop(fadeTime)

@@ -14,10 +14,10 @@ local function onConfigModified(self, child)
 	elseif child.Name == "PlayEmote" then
 		self:AttachBindable(child)
 	else
-		local childConns;
+		local childConns
 		childConns = {
 			children = {},
-			
+
 			Changed = fnWrapper(child.Changed:Connect(function()
 				onAnimConfigChildModified(self, child)
 			end)),
@@ -37,17 +37,16 @@ local function onConfigModified(self, child)
 				onAnimConfigChildModified(self, child)
 			end))
 		end
-		
+
 		self.Connections.Config.children[child] = childConns
 	end
 end
 
 local function AttachConfig(self, config)
-	assert(typeof(config) == "Instance", 
-		"An Instance has to be provided to this method!")
-	
+	assert(typeof(config) == "Instance", "An Instance has to be provided to this method!")
+
 	self:UpdateConfig(config)
-	
+
 	local lastConns = self.Connections.Config
 	if lastConns then
 		lastConns.ChildAdded()
@@ -61,11 +60,11 @@ local function AttachConfig(self, config)
 			end
 		end
 	end
-	
-	local conns;
+
+	local conns
 	conns = {
 		children = {},
-		
+
 		ChildAdded = fnWrapper(config.ChildAdded:Connect(function(child)
 			onConfigModified(self, child)
 		end)),
@@ -76,16 +75,16 @@ local function AttachConfig(self, config)
 			elseif child.Name ~= "PlayEmote" then
 				self.TrackLists[child.Name] = self:UpdateConfigSet(self.AnimData[child.Name])
 			end
-		end))
+		end)),
 	}
 	self.Connections.Config = conns
-	
+
 	for _, child in ipairs(config:GetChildren()) do
 		onConfigModified(self, child)
 	end
-	
+
 	self.Config = config
-	
+
 	self:GetAttachedSignal("Config"):Fire(config, conns)
 end
 
